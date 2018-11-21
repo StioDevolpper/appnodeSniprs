@@ -1,0 +1,20 @@
+import web3
+import time
+w = web3.Web3(web3.HTTPProvider('https://mainnet.infura.io/API_Key'))
+# gas example
+gas_limit = 250000
+gas_price = 60
+
+transaction = {
+    'to':to_addr,
+    'from':from_addr,
+    'value':int(eth_amount*(10**18)),
+    'gas':gas_limit,
+    'gasPrice':int(gas_price*(10**9)),
+    'chainId':1,
+    'nonce':int(time.time())
+    }
+signed_transaction = w.eth.account.signTransaction(transaction, key)
+transaction_id = w.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+print ('\nhttps://etherscan.io/tx/{0}'.format(transaction_id.hex()))
